@@ -5,9 +5,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --primary: #19B9FD;
+  --main-text: #3C3C3C;
+  --secondary-text: #9A9A9A;
+  --white: #FFFFFF;
+  --lines: #F9FAFC;
+  --background: #F4F4F9;
+  --background-lk:  #F5F5F5;
+  --footer-background: #303030;
+  --input-border: #C1C1D4;
+  --danger: #FF1F00;
+  --find: #0C8AFF;
+  --lost: #FF9E0C;
+  --charity: #6FC246;
 }

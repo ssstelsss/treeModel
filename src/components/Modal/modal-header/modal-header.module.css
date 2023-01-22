@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.closeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-text);
+}
+
+.closeIcon:hover {
+  cursor: pointer;
+  transition: all 0.5;
+  color: var(--primary);
+}
+
+.text {
+  font-size: 22px;
+  font-weight: 600;
+  font-family: "ProximaNova-Regular";
+
+  color: var(--primary);
+}
+
+@media (max-width: 555px) {
+  .text {
+    font-size: 18px;
+  }
+}

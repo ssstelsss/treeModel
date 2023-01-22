@@ -1,0 +1,13 @@
+.optionsContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  cursor: pointer;
+  opacity: 0.3;
+  z-index: 2;
+}
+
+.optionsContainer:hover {
+  opacity: 1;
+}
