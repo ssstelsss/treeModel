@@ -2,11 +2,11 @@ import { Layer, Rect, Stage, Text } from 'react-konva'
 import { LocalImage } from './components/LocalImage/LocalImage'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { WorldManager } from './models/WorldManager'
-import styles from './App.module.css'
 import {
   IModelOptionsProps,
   MainMenuModal,
 } from './components/MainMenuModal/MainMenuModal'
+import styles from './App.module.css'
 
 const CELL_SIZE = 50
 
@@ -64,10 +64,10 @@ function App() {
 
     for (let indexX = 0; indexX < manager.boardSizes.x; indexX++) {
       for (let indexY = 0; indexY < manager.boardSizes.y; indexY++) {
-        manager.board[indexX][indexY].trees.forEach((tree, index) => {
+        manager.board[indexX][indexY].trees.length &&
           result.push(
             <LocalImage
-              key={`tree_${indexX}_${indexY}_${index}`}
+              key={`tree_${indexX}_${indexY}`}
               src='images/tree.png'
               x={indexX * manager.cellSize}
               y={indexY * manager.cellSize}
@@ -75,12 +75,11 @@ function App() {
               height={manager.cellSize / 2}
             />
           )
-        })
 
-        manager.board[indexX][indexY].agents.lumberjacks.forEach(lumberjack => {
+        manager.board[indexX][indexY].agents.lumberjacks.length && 
           result.push(
             <LocalImage
-              key={`lumberjack_${lumberjack.id}`}
+              key={`lumberjack_${indexX}_${indexY}`}
               src='images/lamberjack.png'
               x={indexX * manager.cellSize}
               y={indexY * manager.cellSize + manager.cellSize / 2}
@@ -88,7 +87,6 @@ function App() {
               height={manager.cellSize / 2}
             />
           )
-        })
 
         manager.board[indexX][indexY].trees.length &&
           result.push(
@@ -144,6 +142,7 @@ function App() {
             height={CELL_SIZE}
             fill='transparent'
             stroke='black'
+            drawBorder={true}
           />
         )
       }
@@ -163,7 +162,7 @@ function App() {
         plantCount: options.plantCount,
         initAgentNumbers: {
           lumberjack: options.lumberjackCount,
-          tree: options.plantCount,
+          tree: options.treeCount,
         },
       })
     )
