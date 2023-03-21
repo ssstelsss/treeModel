@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback } from 'react'
 import ReactDOM from 'react-dom'
 import debounce from 'lodash/debounce'
 import ModalHeader from './modal-header/modal-header'

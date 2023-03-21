@@ -59,10 +59,10 @@ export class Agent {
   moveAgentTowardDirection(direction: TDirection) {
     switch (direction) {
       case 'top':
-        this.moveTo(this.x + 1, this.y)
+        this.moveTo(this.x - 1, this.y)
         break
       case 'bottom':
-        this.moveTo(this.x - 1, this.y)
+        this.moveTo(this.x + 1, this.y)
         break
       case 'right':
         this.moveTo(this.x, this.y + 1)

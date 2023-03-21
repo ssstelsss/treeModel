@@ -26,7 +26,7 @@ function App() {
 
     const id = setInterval(() => {
       manager?.doLifeItteration()
-      setItteration(itteration => itteration + 1)
+      setItteration(prevItteration => prevItteration + 1)
     }, 1000)
     setintervalId(id)
 
