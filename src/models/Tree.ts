@@ -1,20 +1,20 @@
 interface ITreeProps {
-  adaltAge?: number
+  oldAge?: number
   maxAge?: number
 }
 
 export class Tree {
   public age = 1
-  public adaltAge = 10
+  public oldAge = 10
   public maxAge = 200
 
   constructor(props?: ITreeProps) {
-    this.adaltAge = props?.adaltAge ?? 10
+    this.oldAge = props?.oldAge ?? 10
     this.maxAge = props?.maxAge || 200
   }
 
   get isAdult() {
-    return this.age >= this.adaltAge
+    return this.age >= this.oldAge
   }
 
   get isTimeToDie() {

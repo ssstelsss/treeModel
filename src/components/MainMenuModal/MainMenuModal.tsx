@@ -11,6 +11,7 @@ interface IMainMenuModalProps {
 
 export interface IModelOptionsProps {
   maxAge: number
+  oldTreeAge: number
   lumberjackCount: number
   treeCount: number
   chopCount: number
@@ -23,13 +24,14 @@ export const MainMenuModal: FC<IMainMenuModalProps> = ({
 }) => {
   const [options, setOptions] = useState({
     maxAge: 100,
+    oldTreeAge: 20,
     lumberjackCount: 20,
     treeCount: 100,
     chopCount: 1,
     plantCount: 1,
   })
 
-  function onChangeMaxAge(event: any) {
+  function onChangeField(event: any) {
     setOptions(oldOptions => ({
       ...oldOptions,
       [event.target.name]: +event.target.value,
@@ -46,10 +48,11 @@ export const MainMenuModal: FC<IMainMenuModalProps> = ({
             type='number'
             value={options.maxAge}
             name={'maxAge'}
+            InputProps={{ inputProps: { min: 1 } }}
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={onChangeMaxAge}
+            onChange={onChangeField}
           />
           <TextField
             id='max-age'
@@ -57,21 +60,23 @@ export const MainMenuModal: FC<IMainMenuModalProps> = ({
             type='number'
             value={options.lumberjackCount}
             name={'lumberjackCount'}
+            InputProps={{ inputProps: { min: 0 } }}
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={onChangeMaxAge}
+            onChange={onChangeField}
           />
           <TextField
             id='max-age'
             label='Количество деревьев'
             type='number'
             value={options.treeCount}
+            InputProps={{ inputProps: { min: 0 } }}
             name={'treeCount'}
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={onChangeMaxAge}
+            onChange={onChangeField}
           />
           <TextField
             id='max-age'
@@ -79,21 +84,35 @@ export const MainMenuModal: FC<IMainMenuModalProps> = ({
             type='number'
             value={options.chopCount}
             name={'chopCount'}
+            InputProps={{ inputProps: { min: 0 } }}
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={onChangeMaxAge}
+            onChange={onChangeField}
+          />
+          <TextField
+            id='max-age'
+            label='Возраст дерева, которое можно рубить'
+            type='number'
+            InputProps={{ inputProps: { min: 1 } }}
+            value={options.oldTreeAge}
+            name={'oldTreeAge'}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={onChangeField}
           />
           <TextField
             id='max-age'
             label='Количество сажаемых деревьев'
             type='number'
             value={options.plantCount}
+            InputProps={{ inputProps: { min: 0 } }}
             name={'plantCount'}
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={onChangeMaxAge}
+            onChange={onChangeField}
           />
         </div>
         <Button

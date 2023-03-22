@@ -17,18 +17,21 @@ export class WorldManager {
 
   public board: INode[][] = []
   private maxAge: number
+  private oldTreeAge: number
   private itterationNumber: number = 1
 
   constructor({
     boardSizes,
     cellSize,
     maxAge = 100,
+    oldTreeAge = 10,
     chopCount = 1,
     plantCount = 1,
     initAgentNumbers = { lumberjack: 20, tree: 100 },
   }: IWorldManagerProps) {
     this.boardSizes = boardSizes
     this.maxAge = maxAge
+    this.oldTreeAge = oldTreeAge
     this.cellSize = cellSize || 50
 
     this.chopCount = chopCount
@@ -49,7 +52,7 @@ export class WorldManager {
       const x = getRandomInt(0, this.boardSizes.x - 1)
       const y = getRandomInt(0, this.boardSizes.y - 1)
 
-      this.board[x][y].trees.push(new Tree())
+      this.board[x][y].trees.push(new Tree({ oldAge: this.oldTreeAge }))
     }
 
     for (
@@ -61,7 +64,13 @@ export class WorldManager {
       const y = getRandomInt(0, this.boardSizes.y - 1)
 
       this.board[x][y].agents.lumberjacks.push(
-        new Lumberjack({ x, y, board: this.board, chopCount: this.chopCount })
+        new Lumberjack({
+          x,
+          y,
+          board: this.board,
+          chopCount: this.chopCount,
+          plantCount: this.plantCount,
+        })
       )
     }
   }

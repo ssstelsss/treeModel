@@ -15,6 +15,7 @@ export interface IWorldManagerProps {
   boardSizes: IBoardSizes
   cellSize?: number
   maxAge?: number
+  oldTreeAge?: number
   initAgentNumbers?: IInitAgentNumbers
 
   chopCount?: number

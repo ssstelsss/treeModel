@@ -26,9 +26,9 @@ export class Lumberjack extends Agent {
     board,
   }: ILumberjackProps) {
     super({ x, y, board, agentType: 'lumberjacks' })
-    this.chopCount = chopCount || 1
-    this.plantCount = plantCount || 1
-    this.activityRadius = activityRadius || 1
+    this.chopCount = chopCount ?? 1
+    this.plantCount = plantCount ?? 1
+    this.activityRadius = activityRadius ?? 1
     this.maxResource = maxResource || 20
   }
 
