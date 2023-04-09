@@ -5,6 +5,7 @@ import {
   IBoardSizes,
   IInitAgentNumbers,
   INode,
+  IStatistic,
   IWorldManagerProps,
 } from './WorldManager.interface'
 
@@ -16,6 +17,7 @@ export class WorldManager {
   public plantCount: number
 
   public board: INode[][] = []
+  public modelStatistic: IStatistic[] = []
   private maxAge: number
   private oldTreeAge: number
   private itterationNumber: number = 1
@@ -68,6 +70,7 @@ export class WorldManager {
           x,
           y,
           board: this.board,
+          oldTreeAge: this.oldTreeAge,
           chopCount: this.chopCount,
           plantCount: this.plantCount,
         })
@@ -75,10 +78,27 @@ export class WorldManager {
     }
   }
 
+  write_statistic() {
+    let totalTree = 0
+    let totalLumberjacks = 0
+
+    for (let indexX = 0; indexX < this.boardSizes.x; indexX++) {
+      for (let indexY = 0; indexY < this.boardSizes.y; indexY++) {
+        // statistic
+        totalTree += this.board[indexX][indexY].trees.length
+        totalLumberjacks += this.board[indexX][indexY].agents.lumberjacks.length
+      }
+    }
+
+    this.modelStatistic.push({ totalTree, totalLumberjacks })
+  }
+
   doLifeItteration() {
-    if (this.itterationNumber >= this.maxAge) {
+    if (this.isModelEnd()) {
       return
     }
+
+    this.write_statistic()
 
     for (let indexX = 0; indexX < this.boardSizes.x; indexX++) {
       for (let indexY = 0; indexY < this.boardSizes.y; indexY++) {
@@ -86,8 +106,14 @@ export class WorldManager {
         this.board[indexX][indexY].agents['lumberjacks'].forEach(lumberjack => {
           lumberjack.increaseResource()
           lumberjack.splitIfEnoughResource()
-          lumberjack.chopTrees()
           lumberjack.plantTrees()
+          lumberjack.chopTrees()
+        })
+
+        this.board[indexX][indexY].agents['lumberjacks'].forEach(lumberjack => {
+          lumberjack.checkIfAlive()
+        })
+        this.board[indexX][indexY].agents['lumberjacks'].forEach(lumberjack => {
           lumberjack.moveAgentToRandomNearestCell()
         })
 
@@ -104,5 +130,9 @@ export class WorldManager {
     }
 
     return (this.itterationNumber += 1)
+  }
+
+  isModelEnd() {
+    return this.itterationNumber >= this.maxAge
   }
 }

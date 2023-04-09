@@ -11,3 +11,7 @@
 .optionsContainer:hover {
   opacity: 1;
 }
+
+.resultWrapper {
+  padding: 20px;
+}

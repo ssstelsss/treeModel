@@ -38,13 +38,14 @@ export class Agent {
     )
   }
 
+  isPointExistOnBoard(x: number, y: number) {
+    return (
+      x >= 0 && x < this.board?.length && y >= 0 && y < this.board[0]?.length
+    )
+  }
+
   moveTo(newX: number, newY: number) {
-    if (
-      newX >= 0 &&
-      newX < this.board?.length &&
-      newY >= 0 &&
-      newY < this.board[0]?.length
-    ) {
+    if (this.isPointExistOnBoard(newX, newY)) {
       const [agent] = this.board[this.x][this.y].agents[this.agentType].splice(
         this.agentIndex,
         1

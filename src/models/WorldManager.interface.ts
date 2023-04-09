@@ -30,3 +30,8 @@ export interface INode {
   trees: Tree[]
   agents: INodeAgents
 }
+
+export interface IStatistic {
+  totalTree: number
+  totalLumberjacks: number
+}

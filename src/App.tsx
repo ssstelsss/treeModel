@@ -1,6 +1,6 @@
 import { Layer, Rect, Stage, Text } from 'react-konva'
 import { LocalImage } from './components/LocalImage/LocalImage'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { WorldManager } from './models/WorldManager'
 import {
   IModelOptionsProps,
@@ -12,26 +12,28 @@ const CELL_SIZE = 50
 
 function App() {
   const [itteration, setItteration] = useState(1)
+
   const [manager, setManager] = useState<WorldManager>()
   const [height, setHeight] = useState(window.innerHeight)
   const [width, setWidth] = useState(window.innerWidth)
   const [amountCellX, setAmountCellX] = useState(1)
   const [amountCellY, setAmountCellY] = useState(1)
 
-  const [intervalId, setintervalId] = useState<NodeJS.Timer>()
+  const intervalIDRef = useRef<NodeJS.Timer>()
   const [isMainMenuModal, setIsMainMenuModal] = useState(false)
 
   useEffect(() => {
-    intervalId && clearInterval(intervalId)
+    intervalIDRef.current && clearInterval(intervalIDRef.current)
 
     const id = setInterval(() => {
       manager?.doLifeItteration()
       setItteration(prevItteration => prevItteration + 1)
     }, 1000)
-    setintervalId(id)
+
+    intervalIDRef.current = id
 
     return () => {
-      clearInterval(intervalId)
+      clearInterval(intervalIDRef.current)
     }
   }, [manager])
 
@@ -76,7 +78,7 @@ function App() {
             />
           )
 
-        manager.board[indexX][indexY].agents.lumberjacks.length && 
+        manager.board[indexX][indexY].agents.lumberjacks.length &&
           result.push(
             <LocalImage
               key={`lumberjack_${indexX}_${indexY}`}
@@ -158,6 +160,7 @@ function App() {
         cellSize: CELL_SIZE,
 
         maxAge: options.maxAge,
+        oldTreeAge: options.oldTreeAge,
         chopCount: options.chopCount,
         plantCount: options.plantCount,
         initAgentNumbers: {
@@ -168,8 +171,24 @@ function App() {
     )
   }
 
+  if (manager?.isModelEnd()) {
+    clearInterval(intervalIDRef.current)
+    console.log('result: ', manager.modelStatistic)
+  }
+
   return (
     <>
+      {manager?.isModelEnd() ? (
+        <div className={styles.resultWrapper}>
+          <h3>Результаты</h3>
+          <span>{JSON.stringify(manager.modelStatistic, undefined, 4)}</span>
+        </div>
+      ) : (
+        <Stage width={width} height={height}>
+          <Layer>{renderBoard()}</Layer>
+          <Layer>{renderBoardAgents()}</Layer>
+        </Stage>
+      )}
       <div className={styles.optionsContainer}>
         <img
           src='images/option.png'
@@ -179,10 +198,6 @@ function App() {
           }}
         />
       </div>
-      <Stage width={width} height={height}>
-        <Layer>{renderBoard()}</Layer>
-        <Layer>{renderBoardAgents()}</Layer>
-      </Stage>
       {isMainMenuModal && (
         <MainMenuModal
           onApprove={newWorld}

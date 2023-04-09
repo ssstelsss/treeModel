@@ -24,7 +24,7 @@ export const MainMenuModal: FC<IMainMenuModalProps> = ({
 }) => {
   const [options, setOptions] = useState({
     maxAge: 100,
-    oldTreeAge: 20,
+    oldTreeAge: 10,
     lumberjackCount: 20,
     treeCount: 100,
     chopCount: 1,
